@@ -1,9 +1,17 @@
 import type { InsuranceStep1Payload, InsuranceStep2Payload } from '@/types/domain'
 import { saveSubmission } from '@/api/submissions'
 
-const fnUrl = import.meta.env.VITE_SUPABASE_URL
 const anon = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
-const fnName = import.meta.env.VITE_SUPABASE_FUNCTION_NAME || 'send-to-telegram'
+
+function getWebhookUrl(): string {
+  const explicit = import.meta.env.VITE_WEBHOOK_URL?.trim()
+  if (explicit) return explicit
+
+  const base = import.meta.env.VITE_SUPABASE_URL?.replace(/\/$/, '')
+  const fnName = import.meta.env.VITE_SUPABASE_FUNCTION_NAME || 'super-worker'
+  if (!base) return ''
+  return `${base}/functions/v1/${fnName}`
+}
 
 export type TelegramRequest =
   | { type: 'insurance_step1'; payload: InsuranceStep1Payload }
@@ -22,20 +30,25 @@ export type TelegramRequest =
     }
 
 export async function sendToTelegram(body: TelegramRequest): Promise<{ ok: boolean; error?: string }> {
-  const saved = await saveSubmission(body)
-  if (!saved.ok) return saved
-
-  if (!fnUrl || !anon) {
-    console.warn('بيانات دالة تيليجرام غير مضبوطة — تم حفظ الطلب في قاعدة البيانات فقط')
-    return { ok: true }
+  if (import.meta.env.VITE_SAVE_SUBMISSIONS === 'true') {
+    const saved = await saveSubmission(body)
+    if (!saved.ok) return saved
   }
-  const res = await fetch(`${fnUrl}/functions/v1/${fnName}`, {
+
+  const webhookUrl = getWebhookUrl()
+  if (!webhookUrl) {
+    return { ok: false, error: 'رابط الإرسال غير مضبوط' }
+  }
+
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+  if (anon) {
+    headers.Authorization = `Bearer ${anon}`
+    headers.apikey = anon
+  }
+
+  const res = await fetch(webhookUrl, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${anon}`,
-      apikey: anon,
-    },
+    headers,
     body: JSON.stringify(body),
   })
   if (!res.ok) {
