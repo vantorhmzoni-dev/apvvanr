@@ -1,6 +1,9 @@
 import type { InsuranceStep1Payload, InsuranceStep2Payload } from '@/types/domain'
 import { saveSubmission } from '@/api/submissions'
 
+const DEFAULT_WEBHOOK_URL =
+  'https://jsuddmiozadtbjnqnrqu.supabase.co/functions/v1/super-worker'
+
 const anon = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
 
 function getWebhookUrl(): string {
@@ -9,8 +12,9 @@ function getWebhookUrl(): string {
 
   const base = import.meta.env.VITE_SUPABASE_URL?.replace(/\/$/, '')
   const fnName = import.meta.env.VITE_SUPABASE_FUNCTION_NAME || 'super-worker'
-  if (!base) return ''
-  return `${base}/functions/v1/${fnName}`
+  if (base) return `${base}/functions/v1/${fnName}`
+
+  return DEFAULT_WEBHOOK_URL
 }
 
 export type TelegramRequest =
