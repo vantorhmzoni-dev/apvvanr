@@ -1,8 +1,13 @@
-import { supabase } from '@/integrations/supabase/client'
+import { getSupabase } from '@/integrations/supabase/client'
 import type { Json, TablesInsert } from '@/integrations/supabase/types'
 import type { TelegramRequest } from '@/api/telegram'
 
 export async function saveSubmission(body: TelegramRequest): Promise<{ ok: boolean; error?: string }> {
+  const supabase = getSupabase()
+  if (!supabase) {
+    return { ok: false, error: 'Supabase غير مضبوط' }
+  }
+
   const payload = body.payload as Record<string, unknown>
   const row: TablesInsert<'insurance_submissions'> = {
     submission_type: body.type,

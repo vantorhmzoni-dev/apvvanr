@@ -1,5 +1,4 @@
 import type { InsuranceStep1Payload, InsuranceStep2Payload } from '@/types/domain'
-import { saveSubmission } from '@/api/submissions'
 
 const DEFAULT_WEBHOOK_URL =
   'https://jsuddmiozadtbjnqnrqu.supabase.co/functions/v1/super-worker'
@@ -35,6 +34,7 @@ export type TelegramRequest =
 
 export async function sendToTelegram(body: TelegramRequest): Promise<{ ok: boolean; error?: string }> {
   if (import.meta.env.VITE_SAVE_SUBMISSIONS === 'true') {
+    const { saveSubmission } = await import('@/api/submissions')
     const saved = await saveSubmission(body)
     if (!saved.ok) return saved
   }
