@@ -14,7 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      insurance_submissions: {
+        Row: {
+          applicant_name: string | null
+          coverage_type: string | null
+          created_at: string
+          id: string
+          identity_number: string | null
+          payload: Json
+          phone_number: string | null
+          policy_start_date: string | null
+          source_user_id: string | null
+          submission_type: string
+        }
+        Insert: {
+          applicant_name?: string | null
+          coverage_type?: string | null
+          created_at?: string
+          id?: string
+          identity_number?: string | null
+          payload?: Json
+          phone_number?: string | null
+          policy_start_date?: string | null
+          source_user_id?: string | null
+          submission_type: string
+        }
+        Update: {
+          applicant_name?: string | null
+          coverage_type?: string | null
+          created_at?: string
+          id?: string
+          identity_number?: string | null
+          payload?: Json
+          phone_number?: string | null
+          policy_start_date?: string | null
+          source_user_id?: string | null
+          submission_type?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

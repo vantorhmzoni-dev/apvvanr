@@ -13,12 +13,25 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Tajawal', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        info: "hsl(var(--info))",
+        footer: "hsl(var(--footer))",
+        "footer-muted": "hsl(var(--footer-muted))",
+        deep: "hsl(var(--deep))",
+        "plan-gher-surface": "hsl(var(--plan-gher-surface))",
+        "plan-gher-intro-from": "hsl(var(--plan-gher-intro-from))",
+        "plan-gher-intro-to": "hsl(var(--plan-gher-intro-to))",
+        "plan-shamel-surface": "hsl(var(--plan-shamel-surface))",
+        "plan-shamel-intro-from": "hsl(var(--plan-shamel-intro-from))",
+        "plan-shamel-intro-to": "hsl(var(--plan-shamel-intro-to))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -63,7 +76,15 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      boxShadow: {
+        soft: "var(--shadow-soft)",
+        card: "var(--shadow-card)",
+      },
       keyframes: {
+        "spin-slow": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
         "accordion-down": {
           from: {
             height: "0",
@@ -82,6 +103,7 @@ export default {
         },
       },
       animation: {
+        "spin-slow": "spin-slow 1s linear infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },

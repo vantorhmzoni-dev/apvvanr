@@ -1,87 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Semantic tokens — استخدم في المكونات فقط أسماء مثل bg-background، text-muted-foreground */
 @layer base {
   :root {
-    --radius: 0.5rem;
-
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
+    --background: 214 47% 97%;
+    --foreground: 207 53% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 207 53% 12%;
+
+    --muted: 204 41% 94%;
+    --muted-foreground: 211 18% 36%;
+
+    --primary: 202 77% 25%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 202 77% 25%;
+
+    --accent: 34 87% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 213 43% 89%;
+    --input: 213 43% 89%;
+    --ring: 202 77% 25%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 207 53% 12%;
 
-    --primary: 221 47% 25%;
-    --primary-foreground: 210 40% 98%;
+    --info: 207 79% 51%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --footer: 205 73% 16%;
+    --footer-muted: 205 27% 70%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    /* تدرج البطل */
+    --deep: 204 76% 16%;
 
-    --accent: 37 93% 50%;
-    --accent-foreground: 222 47% 11%;
+    /* صفحات العروض */
+    --plan-gher-surface: 30 100% 96%;
+    --plan-gher-intro-from: 27 88% 58%;
+    --plan-gher-intro-to: 28 80% 52%;
+    --plan-shamel-surface: 206 53% 94%;
+    --plan-shamel-intro-from: 203 77% 20%;
+    --plan-shamel-intro-to: 199 84% 25%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --radius: 0.75rem;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 221 47% 25%;
+    --shadow-soft: 0 16px 40px hsl(var(--primary) / 0.12);
+    --shadow-card: 0 14px 30px hsl(var(--primary) / 0.16);
   }
 
-  .dark {
-    --background: 222 47% 8%;
-    --foreground: 210 40% 98%;
-
-    --card: 222 47% 10%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222 47% 10%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222 47% 11%;
-
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-
-    --accent: 37 93% 50%;
-    --accent-foreground: 222 47% 11%;
-
-    --destructive: 0 63% 45%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 212 100% 70%;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
 
-  html {
-    scroll-behavior: smooth;
-  }
-
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-sans text-foreground antialiased;
+    direction: rtl;
   }
 
-  input[type='number']::-webkit-inner-spin-button,
-  input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  select option {
+    @apply bg-popover text-popover-foreground;
   }
 }
